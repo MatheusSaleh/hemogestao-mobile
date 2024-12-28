@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { router } from "expo-router";
+
 import { s } from "./styles";
 
 const LoginScreen = () => {
@@ -25,7 +27,9 @@ const LoginScreen = () => {
         secureTextEntry
       />
 
-      <TouchableOpacity style={s.loginButton}>
+      <TouchableOpacity style={s.loginButton} onPress={() => {  
+          router.navigate("/welcome/welcome");
+          }}>
         <Text style={s.loginText}>Entrar</Text>
       </TouchableOpacity>
 
