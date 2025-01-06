@@ -1,5 +1,6 @@
 import { s } from "./styles";
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import { router } from "expo-router";
 
 const WelcomeScreen = () => {
   return (
@@ -15,7 +16,9 @@ const WelcomeScreen = () => {
           A todo segundo, pessoas precisam de doação, sua doação pode salvar até 3 vidas
         </Text>
 
-        <TouchableOpacity style={s.button}>
+        <TouchableOpacity style={s.button} onPress={() => {
+          router.navigate("/main-screen/main-screen");
+        }}>
           <Text style={s.buttonText}>Começar</Text>
         </TouchableOpacity>
       </View>
