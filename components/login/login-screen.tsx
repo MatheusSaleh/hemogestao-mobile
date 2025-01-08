@@ -10,7 +10,16 @@ import { router } from "expo-router";
 
 import { s } from "./styles";
 
-const LoginScreen = () => {
+type LoginScreenProps = {
+  onLogin: () => void;
+}
+
+const LoginScreen = ({ onLogin }: LoginScreenProps) => {
+
+  const handleLogin = () => {
+    onLogin();
+  }
+
   return (
     <View style={s.container}>
       <Text style={s.title}>Bem-Vindo ao Hemogestão App</Text>
@@ -27,9 +36,7 @@ const LoginScreen = () => {
         secureTextEntry
       />
 
-      <TouchableOpacity style={s.loginButton} onPress={() => {  
-          router.navigate("/welcome/welcome");
-          }}>
+      <TouchableOpacity style={s.loginButton} onPress={handleLogin}>
         <Text style={s.loginText}>Entrar</Text>
       </TouchableOpacity>
 

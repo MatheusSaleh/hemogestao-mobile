@@ -1,12 +1,10 @@
 import { s } from "./styles";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 
-import Icon from "react-native-vector-icons/FontAwesome5";
 import Header from "@/components/header/header";
 import MainMenu from "@/components/main-menu/main-menu";
 import DonationSection from "@/components/donation-section/donation-section";
 import HistoryItem from "@/components/history-item/history-item";
-import NavBar from "@/components/navbar/navbar";
 
 const MainScreen = () => {
   return (
@@ -35,7 +33,6 @@ const MainScreen = () => {
         <HistoryItem date="12/07/2022" type="Sangue Completo" />
       </View>
 
-      <NavBar/>
     </ScrollView>
   );
 };
