@@ -1,24 +1,34 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-
-import { router } from "expo-router";
-
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { s } from "./styles";
+import { loginRequest } from "@/app/services/login-request";
 
 type LoginScreenProps = {
   onLogin: () => void;
-}
+};
 
 const LoginScreen = ({ onLogin }: LoginScreenProps) => {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    onLogin();
-  }
+  const handleLogin = async () => {
+    setLoading(true);
+    const loginData = { login, password };
+
+    try {
+      const isSuccess = await loginRequest(loginData);
+      if (isSuccess) {
+        onLogin();
+      } else {
+        console.error("Login falhou");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={s.container}>
@@ -28,12 +38,16 @@ const LoginScreen = ({ onLogin }: LoginScreenProps) => {
         style={s.input}
         placeholder="Escreva o seu email"
         placeholderTextColor="#999"
+        onChangeText={setLogin}
+        value={login}
       />
       <TextInput
         style={s.input}
         placeholder="Escreva a sua senha"
         placeholderTextColor="#999"
         secureTextEntry
+        onChangeText={setPassword}
+        value={password}
       />
 
       <TouchableOpacity style={s.loginButton} onPress={handleLogin}>
@@ -47,21 +61,8 @@ const LoginScreen = ({ onLogin }: LoginScreenProps) => {
       <TouchableOpacity>
         <Text style={s.register}>Cadastrar-se</Text>
       </TouchableOpacity>
-
-      <Text style={s.orText}>Ou entre com</Text>
-
-      <View style={s.socialIcons}>
-        <TouchableOpacity style={s.iconButton}>
-          <Text style={s.icon}>G</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={s.iconButton}>
-          <Text style={s.icon}></Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
-
-
 
 export default LoginScreen;
