@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { s } from "./styles";
 import { loginRequest } from "@/app/services/login-request";
+import { useRouter } from "expo-router";
+import InputField from "../input-field/input-field";
 
 type LoginScreenProps = {
   onLogin: () => void;
 };
 
 const LoginScreen = ({ onLogin }: LoginScreenProps) => {
+
+  const router = useRouter();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,21 +39,18 @@ const LoginScreen = ({ onLogin }: LoginScreenProps) => {
     <View style={s.container}>
       <Text style={s.title}>Bem-Vindo ao Hemogestão App</Text>
 
-      <TextInput
-        style={s.input}
+      <InputField
         placeholder="Escreva o seu email"
-        placeholderTextColor="#999"
         onChangeText={setLogin}
         value={login}
       />
-      <TextInput
-        style={s.input}
+      <InputField
         placeholder="Escreva a sua senha"
-        placeholderTextColor="#999"
-        secureTextEntry
         onChangeText={setPassword}
         value={password}
+        secureTextEntry
       />
+  
 
       <TouchableOpacity style={s.loginButton} onPress={handleLogin}>
         <Text style={s.loginText}>Entrar</Text>
@@ -58,7 +60,7 @@ const LoginScreen = ({ onLogin }: LoginScreenProps) => {
         <Text style={s.forgotPassword}>Esqueceu a sua senha?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/register/register')}>
         <Text style={s.register}>Cadastrar-se</Text>
       </TouchableOpacity>
     </View>
