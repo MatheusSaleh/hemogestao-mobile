@@ -34,6 +34,69 @@ const RegisterScreen = () => {
           />
         )}
       />
+      
+      <Text>Data de Nascimento</Text>
+      <Controller
+        control={control}
+        name="people.dateOfBirth"
+        rules={{ required: "Campo obrigatório" }}
+        render={({ field: { onChange, value } }) => (
+          <InputField
+            placeholder="Data de Nascimento"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+
+      <Text>Gênero</Text>
+      <Controller
+        control={control}
+        name="people.gender"
+        rules={{ required: "Campo obrigatório" }}
+        render={({ field: { onChange, value } }) => (
+          <InputField
+            placeholder="Gênero"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        />
+
+      <Text>Email</Text>
+      <Controller
+        control={control}
+        name="people.email"
+        rules={
+          { 
+            required: "Campo obrigatório",
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          }
+        }
+        render={({ field: { onChange, value } }) => (
+          <InputField
+            placeholder="Email"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+
+      <Text>Tipo Sanguíneo</Text>
+      <Controller
+        control={control}
+        name="bloodType"
+        rules={{ required: "Campo obrigatório" }}
+        render={({ field: { onChange, value } }) => (
+          <InputField
+            placeholder="Tipo Sanguíneo"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+
+      
     </ScrollView>
   );
 };
