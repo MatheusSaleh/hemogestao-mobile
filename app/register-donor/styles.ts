@@ -26,3 +26,4 @@ export const s = StyleSheet.create({
         marginBottom: 10,
       }
 }); 
+export default s;

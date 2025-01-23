@@ -3,7 +3,9 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { s } from "./styles";
 import { loginRequest } from "@/app/services/login-request";
 import { useRouter } from "expo-router";
-import InputField from "../input-field/input-field";
+import InputField from "../../components/input-field/input-field";
+import RedButton from "@/components/red-button/red.button";
+import WhiteButton from "@/components/white-button/white-button";
 
 type LoginScreenProps = {
   onLogin: () => void;
@@ -51,18 +53,10 @@ const LoginScreen = ({ onLogin }: LoginScreenProps) => {
         secureTextEntry
       />
   
+      <RedButton onPress={handleLogin}  text="Entrar" buttonStyle={s.loginButton} textStyle={s.loginText}  />
 
-      <TouchableOpacity style={s.loginButton} onPress={handleLogin}>
-        <Text style={s.loginText}>Entrar</Text>
-      </TouchableOpacity>
+      <WhiteButton onPress={() => router.push('/register-donor/register-donor')} text="Cadastrar-se" textStyle={s.register} buttonStyle={s.registerButton}/>
 
-      <TouchableOpacity>
-        <Text style={s.forgotPassword}>Esqueceu a sua senha?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => router.push('/register/register')}>
-        <Text style={s.register}>Cadastrar-se</Text>
-      </TouchableOpacity>
     </View>
   );
 };

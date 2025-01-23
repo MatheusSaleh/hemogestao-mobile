@@ -43,3 +43,4 @@ export const s = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+export default s;

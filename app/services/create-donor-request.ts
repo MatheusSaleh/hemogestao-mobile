@@ -1,27 +1,25 @@
 import axios, { AxiosError } from "axios";
 import { API_URL } from "./api";
+import { DonorEntity } from "@/domain/entities/DonorEntity";
 
-const URL = `${API_URL}/auth`;
+const URL = `${API_URL}/donor`;
 
-export const loginRequest = async (loginData: {
-  login: string;
-  password: string;
-}): Promise<boolean> => {
+export const createDonorRequest = async (donorData: DonorEntity): Promise<DonorEntity> => {
   try {
-    const response = await axios.post(`${URL}/login`, loginData);
+    const response = await axios.post(`${URL}`, donorData);
     if (response.status === 200 && response.data) {
-      return true;
+      return response.data;
     }
-    return false;
+    return {} as DonorEntity;
   } catch (error) {
     if (error instanceof AxiosError) {
       console.error("Erro Axios:", error.response?.data || error.message);
       if (error.response) {
-        console.log("Resposta de erro do servidor:", error.response.status, error.response.data);
       }
     } else {
       console.error("Erro desconhecido:", error);
     }
-    return false;
+    return {} as DonorEntity;
   }
 };
+export default createDonorRequest;

@@ -1,4 +1,4 @@
-import LoginScreen from '@/components/login/login-screen';
+import LoginScreen from '@/app/login/login-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationIndependentTree } from '@react-navigation/native';
 

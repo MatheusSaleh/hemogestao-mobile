@@ -4,14 +4,13 @@ export const s = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
+    justifyContent: "flex-start",
+    padding: 20,  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 30,
+    marginTop: 90,
   },
   input: {
     width: "100%",
@@ -31,6 +30,12 @@ export const s = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
+  },
+  registerButton: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#E33C37",
   },
   loginText: {
     color: "#fff",
@@ -71,3 +76,4 @@ export const s = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+export default s;
