@@ -30,7 +30,10 @@ const RegisterDonorScreen = () => {
     try {
       const donorData = await createDonorRequest(data);
       if (donorData) {
-        console.log(donorData);
+        router.push({
+          pathname: "/register-user/register-user",
+          params: { donorData: JSON.stringify(donorData) },
+        })
       } else {
         console.error("Cadastro falhou");
       }
