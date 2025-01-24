@@ -1,11 +1,14 @@
-import { TextInput } from "react-native";
+import { KeyboardTypeOptions, TextInput, View, Text } from "react-native";
 import { s } from "./styles";
+import { Key } from "react";
 
 type InputFieldProps = {
   placeholder: string;
   onChangeText: (text: string) => void;
   value: string;
   secureTextEntry?: boolean;
+  keyBoardType?: KeyboardTypeOptions;
+  errors?: any;
 };
 
 const InputField = ({
@@ -13,8 +16,11 @@ const InputField = ({
   onChangeText,
   value,
   secureTextEntry,
+  keyBoardType,
+  errors,
 }: InputFieldProps) => {
   return (
+    <View>
     <TextInput
       style={s.input}
       placeholder={placeholder}
@@ -22,7 +28,10 @@ const InputField = ({
       secureTextEntry={secureTextEntry}
       onChangeText={onChangeText}
       value={value}
+      keyboardType={keyBoardType}
     />
+    {errors && <Text style={s.errorText}>{errors.message}</Text>}
+    </View>
   );
 };
 

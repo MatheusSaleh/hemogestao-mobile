@@ -1,6 +1,6 @@
 import { MaskedTextInput } from 'react-native-mask-text';
 import { s } from './styles';
-import { KeyboardTypeOptions } from 'react-native';
+import { KeyboardTypeOptions, View, Text } from 'react-native';
 
 type MaskInputFieldProps = {
     placeholder: string;
@@ -9,6 +9,7 @@ type MaskInputFieldProps = {
     secureTextEntry?: boolean;
     mask: string;
     keyBoardType: KeyboardTypeOptions;
+    error: any;
 }
 
 const MaskInputField = ({
@@ -17,9 +18,11 @@ const MaskInputField = ({
     value, 
     secureTextEntry,
     mask,
-    keyBoardType
+    keyBoardType,
+    error
 }: MaskInputFieldProps) => {
     return (
+        <View>
         <MaskedTextInput
             style={s.input}
             placeholder={placeholder}
@@ -29,6 +32,8 @@ const MaskInputField = ({
             mask={mask}
             keyboardType={keyBoardType}
         />
+        {error && <Text style={s.errorText}>{error.message}</Text>}
+        </View>
     );
 };
 

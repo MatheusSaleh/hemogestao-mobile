@@ -14,7 +14,6 @@ import WhiteButton from "@/components/white-button/white-button";
 import { useRouter } from "expo-router";
 
 const RegisterDonorScreen = () => {
-
   const router = useRouter();
 
   const {
@@ -61,32 +60,41 @@ const RegisterDonorScreen = () => {
     <ScrollView contentContainerStyle={s.container}>
       <Text style={s.title}>Cadastro de Doador</Text>
 
-      <Text>Nome Completo</Text>
+      <Text accessible accessibilityLabel="Nome Completo">
+        Nome Completo
+      </Text>
       <Controller
         control={control}
         name="people.fullName"
         rules={{ required: "Campo obrigatório" }}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
           <InputField
             placeholder="Nome Completo"
             onChangeText={onChange}
             value={value}
+            errors={error}
           />
         )}
       />
 
-      <Text>Data de Nascimento</Text>
+      <Text accessible accessibilityLabel="Data de Nascimento">
+        Data de Nascimento
+      </Text>
       <Controller
         control={control}
         name="people.dateOfBirth"
-        rules={{ required: "Campo obrigatório" }}
-        render={({ field: { onChange, value } }) => (
+        rules={{
+          required: "Campo obrigatório",
+          pattern: { value: /^\d{2}\/\d{2}\/\d{4}$/, message: "Data Inválida" },
+        }}
+        render={({ field: { onChange, value }, fieldState: {error} }) => (
           <MaskInputField
             placeholder="Data de Nascimento"
             onChangeText={onChange}
             value={value}
             mask="99/99/9999"
             keyBoardType="numeric"
+            error={error}
           />
         )}
       />
@@ -100,18 +108,21 @@ const RegisterDonorScreen = () => {
         errors={errors.people?.gender}
       />
 
-      <Text>Email</Text>
+      <Text accessible accessibilityLabel="Email">Email</Text>
       <Controller
         control={control}
         name="people.email"
         rules={{
           required: "Campo obrigatório",
+          pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Email inválido"}
         }}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value }, fieldState: {error} }) => (
           <InputField
             placeholder="Email"
             onChangeText={onChange}
             value={value}
+            keyBoardType="email-address"
+            errors={error}
           />
         )}
       />
@@ -127,9 +138,12 @@ const RegisterDonorScreen = () => {
 
       <View style={{ display: "flex", flexDirection: "row" }}>
         <RedButton text="Continuar" onPress={handleSubmit(onSubmit)} />
-        <WhiteButton text="Voltar" onPress={() => {
-          router.push('/login/login-screen')
-        }} />
+        <WhiteButton
+          text="Voltar"
+          onPress={() => {
+            router.push("/login/login-screen");
+          }}
+        />
       </View>
     </ScrollView>
   );
