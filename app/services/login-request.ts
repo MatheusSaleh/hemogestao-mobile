@@ -3,13 +3,17 @@ import { API_URL } from "./api";
 
 const URL = `${API_URL}/auth`;
 
+import * as SecureStore from "expo-secure-store";
+
 export const loginRequest = async (loginData: {
   login: string;
   password: string;
 }): Promise<boolean> => {
   try {
     const response = await axios.post(`${URL}/login`, loginData);
-    if (response.status === 200 && response.data) {
+    if (response.status === 200 && response) {
+      const token = response.data;
+      await SecureStore.setItemAsync("token", token);
       return true;
     }
     return false;
