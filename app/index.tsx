@@ -29,6 +29,8 @@ export default function Index() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  console.log('isLoggedIn', isLoggedIn);
+
   if (!isLoggedIn) {
     return <LoginScreen onLogin={() => setIsLoggedIn(true)} />;
   }

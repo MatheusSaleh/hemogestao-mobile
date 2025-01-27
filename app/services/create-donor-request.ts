@@ -22,4 +22,3 @@ export const createDonorRequest = async (donorData: DonorEntity): Promise<DonorE
     return {} as DonorEntity;
   }
 };
-export default createDonorRequest;
