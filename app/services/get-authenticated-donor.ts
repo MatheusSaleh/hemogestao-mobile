@@ -1,6 +1,5 @@
 import axios from "axios";
 import { API_URL } from "./api";
-import { UserEntity } from "@/domain/entities/UserEntity";
 import * as SecureStore from "expo-secure-store";
 import { DonorEntity } from "@/domain/entities/DonorEntity";
 

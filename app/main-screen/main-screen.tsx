@@ -6,10 +6,19 @@ import MainMenu from "@/components/main-menu/main-menu";
 import DonationSection from "@/components/donation-section/donation-section";
 import HistoryItem from "@/components/history-item/history-item";
 import { useDonor } from "../hooks/useDonor";
+import { useDonorDonations } from "../hooks/useDonorDonations";
 
 const MainScreen = () => {
+  const { donor, loading, error } = useDonor();
+  const donorDonations = useDonorDonations(donor?.id);
 
-  const donor = useDonor();
+  if (loading) {
+    return <Text>Carregando Informações...</Text>;
+  }
+
+  if (error) {
+    return <Text>Erro ao carregar informações</Text>;
+  }
 
   return (
     <ScrollView style={s.container}>
@@ -32,9 +41,22 @@ const MainScreen = () => {
 
       <View style={s.section}>
         <Text style={s.sectionTitle}>Histórico de Doações</Text>
-        <HistoryItem date="12/01/2023" type="Sangue Completo" />
-        <HistoryItem date="11/09/2022" type="Sangue Completo" />
-        <HistoryItem date="12/07/2022" type="Sangue Completo" />
+        {donorDonations.map((donation, index) => {
+          const formattedDate = new Date(
+            donation.dateDonation
+          ).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          return (
+            <HistoryItem
+              key={donation.id || index}
+              date={formattedDate}
+              type={donation.donatioType ?? ""}
+            />
+          );
+        })}
       </View>
     </ScrollView>
   );

@@ -2,7 +2,6 @@ import LoginScreen from '@/app/login/login-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationIndependentTree } from '@react-navigation/native';
 
-import { View } from 'react-native';	
 import MainScreen from './main-screen/main-screen';
 import Challenge from './challenge/challenge';
 import NavBar from '@/components/navbar/navbar';
