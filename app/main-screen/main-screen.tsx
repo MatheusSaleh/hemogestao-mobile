@@ -7,10 +7,12 @@ import DonationSection from "@/components/donation-section/donation-section";
 import HistoryItem from "@/components/history-item/history-item";
 import { useDonor } from "../hooks/useDonor";
 import { useDonorDonations } from "../hooks/useDonorDonations";
+import { useDonorSchedulings } from "../hooks/useDonorSchedulings";
 
 const MainScreen = () => {
   const { donor, loading, error } = useDonor();
   const donorDonations = useDonorDonations(donor?.id);
+  const donorSchedulings = useDonorSchedulings(donor?.id);
 
   if (loading) {
     return <Text>Carregando Informações...</Text>;
@@ -30,10 +32,19 @@ const MainScreen = () => {
         })}
         greeting={`Olá, ${donor?.people.fullName}`}
         bloodType={donor?.bloodType ?? ""}
-        profileImage="https://via.placeholder.com/90"
+        profileImage="https://via.placeholder.com/60"
         subtitle={`Você já doou ${donor?.numberOfDonations} vezes`}
       />
       <MainMenu />
+      {donorSchedulings.map((scheduling, index) => {
+        return (
+          <DonationSection
+            key={scheduling.id || index}
+            nextDonationDate={scheduling.dateTimeSchedule ?? ""}
+            nextDonation={scheduling.status ?? ""}
+          />
+        );
+      })}
       <DonationSection
         nextDonation="Sangue Completo"
         nextDonationDate="01/01/2025 - 08:00"

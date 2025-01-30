@@ -1,6 +1,5 @@
 import { DonationEntity } from "@/domain/entities/DonationEntity";
 import { useState, useEffect } from "react";
-import { fetchAuthenticatedDonor } from "../services/auth-service";
 import { getDonorDonationsRequest } from "../services/get-donor-donations-request";
 import { useDonor } from "./useDonor";
 
