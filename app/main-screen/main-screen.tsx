@@ -45,11 +45,6 @@ const MainScreen = () => {
           />
         );
       })}
-      <DonationSection
-        nextDonation="Sangue Completo"
-        nextDonationDate="01/01/2025 - 08:00"
-      />
-
       <View style={s.section}>
         <Text style={s.sectionTitle}>Histórico de Doações</Text>
         {donorDonations.map((donation, index) => {
