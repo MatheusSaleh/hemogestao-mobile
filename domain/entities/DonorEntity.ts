@@ -10,4 +10,5 @@ export interface DonorEntity{
     eligibility?: boolean;
     medicalNotes?: string;
     bCoinsBalance?: number;
+    image?: string;
 }

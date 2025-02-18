@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Button, Image } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { DonorEntity } from "@/domain/entities/DonorEntity";
 
@@ -12,6 +12,7 @@ import { createDonorRequest } from "../services/create-donor-request";
 import { convertDateToISO } from "@/utils/convert-date-to-iso";
 import WhiteButton from "@/components/white-button/white-button";
 import { useRouter } from "expo-router";
+import * as ImagePicker from 'expo-image-picker';
 
 const RegisterDonorScreen = () => {
   const router = useRouter();
@@ -23,10 +24,13 @@ const RegisterDonorScreen = () => {
   } = useForm<DonorEntity>();
 
   const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [imageBase64, setImageBase64] = useState<string>('');
 
   const onSubmit = async (data: DonorEntity) => {
     const date = convertDateToISO(data.people.dateOfBirth);
     data.people.dateOfBirth = date;
+    data.image = imageBase64;
     try {
       const donorData = await createDonorRequest(data);
       if (donorData) {
@@ -41,6 +45,28 @@ const RegisterDonorScreen = () => {
       console.error("Erro ao cadastrar doador:", error);
     }
   };
+
+  const handleImagePick = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      console.error('Permissão negada');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+      base64: true
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      if (result.assets[0].base64) {
+        setImageBase64(result.assets[0].base64);
+      }
+    }
+  }
 
   const bloodTypes = [
     { label: "A+", value: "A+" },
@@ -62,6 +88,9 @@ const RegisterDonorScreen = () => {
   return (
     <ScrollView contentContainerStyle={s.container}>
       <Text style={s.title}>Cadastro de Doador</Text>
+
+      <Button title="Selecionar Imagem" onPress={handleImagePick} />
+      {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: 100, height: 100, marginTop: 10 }} />}
 
       <Text accessible accessibilityLabel="Nome Completo">
         Nome Completo
@@ -153,3 +182,7 @@ const RegisterDonorScreen = () => {
 };
 
 export default RegisterDonorScreen;
+function setImageUUID(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
