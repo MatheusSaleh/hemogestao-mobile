@@ -1,4 +1,3 @@
-import LoginScreen from '@/app/login/login-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationIndependentTree } from '@react-navigation/native';
 
@@ -10,6 +9,7 @@ import Donors from './donors/Donors';
 import Quizes from './quizes/Quizes';
 import Chat from './chat/chat';
 import Hemocenter from './hemocenter/Hemocenter';
+import { LoginScreen } from './login/login-screen';
 
 
 export type RootTabParamList = {
@@ -27,6 +27,7 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 export default function Index() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   console.log('isLoggedIn', isLoggedIn);
 

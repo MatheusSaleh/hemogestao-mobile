@@ -11,7 +11,7 @@ type LoginScreenProps = {
   onLogin: () => void;
 };
 
-const LoginScreen = ({ onLogin }: LoginScreenProps) => {
+export const LoginScreen = ({ onLogin }: LoginScreenProps) => {
 
   const router = useRouter();
 
@@ -61,4 +61,3 @@ const LoginScreen = ({ onLogin }: LoginScreenProps) => {
   );
 };
 
-export default LoginScreen;

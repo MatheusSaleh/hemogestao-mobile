@@ -25,7 +25,7 @@ const RegisterUserScreen = () => {
       const response = await registerDonorRequest(data, donorData);
       if (response) {
         console.log("Usuário cadastrado com sucesso");
-        router.replace("/login/login-screen");
+        router.replace("/")
       } else {
         console.error("Cadastro falhou");
       }
