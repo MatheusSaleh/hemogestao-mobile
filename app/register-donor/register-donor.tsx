@@ -173,7 +173,7 @@ const RegisterDonorScreen = () => {
         <WhiteButton
           text="Voltar"
           onPress={() => {
-            router.push("/login/login-screen");
+            router.replace("/");
           }}
         />
       </View>

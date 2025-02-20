@@ -10,6 +10,9 @@ import Quizes from './quizes/Quizes';
 import Chat from './chat/chat';
 import Hemocenter from './hemocenter/Hemocenter';
 import { LoginScreen } from './login/login-screen';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 
 export type RootTabParamList = {
@@ -32,7 +35,13 @@ export default function Index() {
   console.log('isLoggedIn', isLoggedIn);
 
   if (!isLoggedIn) {
-    return <LoginScreen onLogin={() => setIsLoggedIn(true)} />;
+    return (
+      <SafeAreaView style={styles.container} >
+        <View style={styles.content}>
+          <LoginScreen onLogin={() => setIsLoggedIn(true)} />
+        </View>
+      </SafeAreaView>
+    );
   }
 
   return (
@@ -57,3 +66,14 @@ export default function Index() {
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white', // Defina a cor de fundo desejada
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

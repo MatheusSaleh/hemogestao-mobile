@@ -1,8 +1,9 @@
 import { Text, View } from "react-native"
+import { s } from "./styles"
 
 const Hemocenter = () => {
     return (
-        <View>
+        <View style={s.container}>
             <Text>Hemocenter</Text>
         </View>
     )

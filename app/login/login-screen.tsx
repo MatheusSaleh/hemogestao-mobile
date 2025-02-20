@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, StatusBar } from "react-native";
 import { s } from "./styles";
 import { loginRequest } from "@/app/services/login-request";
 import { useRouter } from "expo-router";
@@ -38,7 +38,8 @@ export const LoginScreen = ({ onLogin }: LoginScreenProps) => {
   };
 
   return (
-    <View style={s.container}>
+    <SafeAreaView style={s.container}>
+      <StatusBar translucent backgroundColor="transparent" />
       <Text style={s.title}>Bem-Vindo ao Hemogestão App</Text>
 
       <InputField
@@ -57,7 +58,7 @@ export const LoginScreen = ({ onLogin }: LoginScreenProps) => {
 
       <WhiteButton onPress={() => router.push('/register-donor/register-donor')} text="Cadastrar-se" textStyle={s.register} buttonStyle={s.registerButton}/>
 
-    </View>
+    </SafeAreaView>
   );
 };
 
