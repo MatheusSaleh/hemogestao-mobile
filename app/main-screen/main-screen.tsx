@@ -32,7 +32,7 @@ const MainScreen = () => {
         })}
         greeting={`Olá, ${donor?.people.fullName}`}
         bloodType={donor?.bloodType ?? ""}
-        profileImage="https://via.placeholder.com/60"
+        profileImage={donor?.image ?? ""}
         subtitle={`Você já doou ${donor?.numberOfDonations} vezes`}
       />
       <MainMenu />
