@@ -13,6 +13,7 @@ import { convertDateToISO } from "@/utils/convert-date-to-iso";
 import WhiteButton from "@/components/white-button/white-button";
 import { useRouter } from "expo-router";
 import * as ImagePicker from 'expo-image-picker';
+import { ActivityIndicator } from "react-native";
 
 const RegisterDonorScreen = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const RegisterDonorScreen = () => {
   const [imageBase64, setImageBase64] = useState<string>('');
 
   const onSubmit = async (data: DonorEntity) => {
+    setLoading(true);
     const date = convertDateToISO(data.people.dateOfBirth);
     data.people.dateOfBirth = date;
     data.image = imageBase64;
@@ -37,12 +39,14 @@ const RegisterDonorScreen = () => {
         router.push({
           pathname: "/register-user/register-user",
           params: { donorData: JSON.stringify(donorData) },
-        })
+        });
       } else {
         console.error("Cadastro falhou");
       }
     } catch (error) {
       console.error("Erro ao cadastrar doador:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,7 +70,7 @@ const RegisterDonorScreen = () => {
         setImageBase64(result.assets[0].base64);
       }
     }
-  }
+  };
 
   const bloodTypes = [
     { label: "A+", value: "A+" },
@@ -87,96 +91,105 @@ const RegisterDonorScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={s.container}>
-      <Text style={s.title}>Cadastro de Doador</Text>
+      {loading && (
+        <View style={s.loadingContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
+      {!loading && (
+        <>
+          <Text style={s.title}>Cadastro de Doador</Text>
 
-      <Button title="Selecionar Imagem" onPress={handleImagePick} />
-      {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: 100, height: 100, marginTop: 10 }} />}
+          <Button title="Selecionar Imagem" onPress={handleImagePick} />
+          {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: 100, height: 100, marginTop: 10 }} />}
 
-      <Text accessible accessibilityLabel="Nome Completo">
-        Nome Completo
-      </Text>
-      <Controller
-        control={control}
-        name="people.fullName"
-        rules={{ required: "Campo obrigatório" }}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <InputField
-            placeholder="Nome Completo"
-            onChangeText={onChange}
-            value={value}
-            errors={error}
+          <Text accessible accessibilityLabel="Nome Completo">
+            Nome Completo
+          </Text>
+          <Controller
+            control={control}
+            name="people.fullName"
+            rules={{ required: "Campo obrigatório" }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <InputField
+                placeholder="Nome Completo"
+                onChangeText={onChange}
+                value={value}
+                errors={error}
+              />
+            )}
           />
-        )}
-      />
 
-      <Text accessible accessibilityLabel="Data de Nascimento">
-        Data de Nascimento
-      </Text>
-      <Controller
-        control={control}
-        name="people.dateOfBirth"
-        rules={{
-          required: "Campo obrigatório",
-          pattern: { value: /^\d{2}\/\d{2}\/\d{4}$/, message: "Data Inválida" },
-        }}
-        render={({ field: { onChange, value }, fieldState: {error} }) => (
-          <MaskInputField
-            placeholder="Data de Nascimento"
-            onChangeText={onChange}
-            value={value}
-            mask="99/99/9999"
-            keyBoardType="numeric"
-            error={error}
+          <Text accessible accessibilityLabel="Data de Nascimento">
+            Data de Nascimento
+          </Text>
+          <Controller
+            control={control}
+            name="people.dateOfBirth"
+            rules={{
+              required: "Campo obrigatório",
+              pattern: { value: /^\d{2}\/\d{2}\/\d{4}$/, message: "Data Inválida" },
+            }}
+            render={({ field: { onChange, value }, fieldState: {error} }) => (
+              <MaskInputField
+                placeholder="Data de Nascimento"
+                onChangeText={onChange}
+                value={value}
+                mask="99/99/9999"
+                keyBoardType="numeric"
+                error={error}
+              />
+            )}
           />
-        )}
-      />
 
-      <DropdownField
-        control={control}
-        name="people.gender"
-        label="Gênero"
-        data={genders}
-        rules={{ required: "Campo obrigatório" }}
-        errors={errors.people?.gender}
-      />
-
-      <Text accessible accessibilityLabel="Email">Email</Text>
-      <Controller
-        control={control}
-        name="people.email"
-        rules={{
-          required: "Campo obrigatório",
-          pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Email inválido"}
-        }}
-        render={({ field: { onChange, value }, fieldState: {error} }) => (
-          <InputField
-            placeholder="Email"
-            onChangeText={onChange}
-            value={value}
-            keyBoardType="email-address"
-            errors={error}
+          <DropdownField
+            control={control}
+            name="people.gender"
+            label="Gênero"
+            data={genders}
+            rules={{ required: "Campo obrigatório" }}
+            errors={errors.people?.gender}
           />
-        )}
-      />
 
-      <DropdownField
-        control={control}
-        name="bloodType"
-        label="Tipo Sanguíneo"
-        data={bloodTypes}
-        rules={{ required: "Campo obrigatório" }}
-        errors={errors.bloodType}
-      />
+          <Text accessible accessibilityLabel="Email">Email</Text>
+          <Controller
+            control={control}
+            name="people.email"
+            rules={{
+              required: "Campo obrigatório",
+              pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Email inválido" }
+            }}
+            render={({ field: { onChange, value }, fieldState: {error} }) => (
+              <InputField
+                placeholder="Email"
+                onChangeText={onChange}
+                value={value}
+                keyBoardType="email-address"
+                errors={error}
+              />
+            )}
+          />
 
-      <View style={{ display: "flex", flexDirection: "row" }}>
-        <RedButton text="Continuar" onPress={handleSubmit(onSubmit)} />
-        <WhiteButton
-          text="Voltar"
-          onPress={() => {
-            router.replace("/");
-          }}
-        />
-      </View>
+          <DropdownField
+            control={control}
+            name="bloodType"
+            label="Tipo Sanguíneo"
+            data={bloodTypes}
+            rules={{ required: "Campo obrigatório" }}
+            errors={errors.bloodType}
+          />
+
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <RedButton text="Continuar" onPress={handleSubmit(onSubmit)} />
+            <WhiteButton
+              text="Voltar"
+              onPress={() => {
+                router.replace("/");
+              }}
+            />
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 };

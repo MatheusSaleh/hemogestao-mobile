@@ -18,7 +18,7 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (ws && ws.readyState === WebSocket.OPEN && input.trim()) {
-      const username = "fernandao";
+      const username = "5";
       const formattedMessage = `${username}:${input}`;
       ws.send(formattedMessage);
       console.log(" Mensagem enviada:", formattedMessage);

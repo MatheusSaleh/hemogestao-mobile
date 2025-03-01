@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 
-const WS_URL = "ws://172.100.127.106:8080/chat";
+const WS_URL = "ws://192.168.100.112:8080/chat";
 
 interface WebSocketConnectionProps {
   setWebSocket: (socket: WebSocket | null) => void;

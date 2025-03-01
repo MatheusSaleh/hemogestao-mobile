@@ -24,6 +24,11 @@ export const s = StyleSheet.create({
       errorText: {
         color: "red",
         marginBottom: 10,
+      },
+      loadingContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
       }
 }); 
 export default s;

@@ -24,5 +24,11 @@ export const s = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
   },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  }
 });
 export default s;

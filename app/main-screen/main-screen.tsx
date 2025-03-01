@@ -1,5 +1,5 @@
 import { s } from "./styles";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 
 import Header from "@/components/header/header";
 import MainMenu from "@/components/main-menu/main-menu";
@@ -15,7 +15,9 @@ const MainScreen = () => {
   const donorSchedulings = useDonorSchedulings(donor?.id);
 
   if (loading) {
-    return <Text>Carregando Informações...</Text>;
+    return <View style={s.loadingContainer}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>;
   }
 
   if (error) {
@@ -47,22 +49,26 @@ const MainScreen = () => {
       })}
       <View style={s.section}>
         <Text style={s.sectionTitle}>Histórico de Doações</Text>
-        {donorDonations.map((donation, index) => {
-          const formattedDate = new Date(
-            donation.dateDonation
-          ).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          });
-          return (
-            <HistoryItem
-              key={donation.id || index}
-              date={formattedDate}
-              type={donation.donatioType ?? ""}
-            />
-          );
-        })}
+        {donorDonations.length === 0 ? (
+          <Text>Nenhuma doação encontrada</Text>
+        ) : (
+          donorDonations.map((donation, index) => {
+        const formattedDate = new Date(
+          donation.dateDonation
+        ).toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        return (
+          <HistoryItem
+            key={donation.id || index}
+            date={formattedDate}
+            type={donation.donatioType ?? ""}
+          />
+        );
+          })
+        )}
       </View>
     </ScrollView>
   );
